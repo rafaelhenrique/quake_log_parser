@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rafaelhenrique/quake_log_parser.svg?branch=master)](https://travis-ci.org/rafaelhenrique/quake_log_parser)
+
 # quake_log_parser
 Quake log parser based on logfile of quake
 
