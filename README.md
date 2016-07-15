@@ -34,3 +34,9 @@ Test specific function or class:
 ```
 $ make test-matching test=TestTask1
 ```
+
+## Execute project
+
+```
+$ python run.py
+```
