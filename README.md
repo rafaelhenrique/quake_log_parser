@@ -37,6 +37,21 @@ $ make test-matching test=TestTask1
 
 ## Execute project
 
+
+### Show help
+
 ```
-$ python run.py
+$ python run.py --help
+```
+
+### Run verbose mode
+
+```
+$ python run.py -f games.log -v
+```
+
+### Show report mode on end of parser
+
+```
+$ python run.py -f games.log -r
 ```
