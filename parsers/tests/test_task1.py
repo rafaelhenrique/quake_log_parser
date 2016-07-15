@@ -19,9 +19,6 @@ class TestTask1:
             'task1.log')
         return logfile
 
-    def setup(self):
-        pass
-
     def test_parse_game_kills(self, task1_logfile):
         parsed_dict = dict(parse_game_kills(task1_logfile))
         assert parsed_dict == {
