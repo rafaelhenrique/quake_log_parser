@@ -25,7 +25,7 @@ class TestTask1:
     def test_parse_game_kills(self, task1_logfile):
         parsed_dict = dict(parse_game_kills(task1_logfile))
         assert parsed_dict == {
-            'game1': {
+            'game_1': {
                 'total_kills': 11,
                 'kills': {
                     'Mocinha': 1,
@@ -33,7 +33,7 @@ class TestTask1:
                 },
                 'players': ['Isgalamido', 'Mocinha']
             },
-            'game2': {
+            'game_2': {
                 'total_kills': 4,
                 'kills': {'Mocinha': 1},
                 'players': ['Isgalamido', 'Mocinha', 'Zeh', 'Dono da Bola']

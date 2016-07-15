@@ -11,7 +11,7 @@ kill_regex = re.compile(r".*Kill:.*:(.*).*killed(.*)by(.*)")
 def parse_game_kills(logfile):
     """Get logfile and parse results into OrderedDict"""
     game_match_count = 1
-    key_map = "game{}"
+    key_map = "game_{}"
     parsed_game_matches = OrderedDict()
     with open(logfile, "r", encoding="utf-8") as fp:
         for line in fp.readlines():
