@@ -52,10 +52,15 @@ def parse_kill_line(line, game_match, show_weapon=False):
         game_match["players"].append(player_dead)
 
     if player_alive != "<world>":
-        if player_dead in game_match["kills"].keys():
-            game_match["kills"][player_dead] += 1
+        if player_alive in game_match["kills"].keys():
+            game_match["kills"][player_alive] += 1
         else:
-            game_match["kills"][player_dead] = 1
+            game_match["kills"][player_alive] = 1
+    else:
+        if player_dead in game_match["kills"].keys():
+            game_match["kills"][player_dead] -= 1
+        else:
+            game_match["kills"][player_dead] = -1
 
     if show_weapon:
         weapon = m.group(3).strip()

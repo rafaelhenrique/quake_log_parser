@@ -23,16 +23,19 @@ class TestTask1:
         assert parsed_dict == {
             'game_1': {
                 'total_kills': 11,
+                'players': ['Isgalamido', 'Mocinha'],
                 'kills': {
-                    'Mocinha': 1,
-                    'Isgalamido': 2
-                },
-                'players': ['Isgalamido', 'Mocinha']
+                    'Isgalamido': -5
+                }
             },
             'game_2': {
                 'total_kills': 4,
-                'kills': {'Mocinha': 1},
-                'players': ['Isgalamido', 'Mocinha', 'Zeh', 'Dono da Bola']
+                'players': ['Isgalamido', 'Mocinha', 'Zeh', 'Dono da Bola'],
+                'kills': {
+                    'Zeh': -2,
+                    'Dono da Bola': -1,
+                    'Isgalamido': 1
+                }
             }
         }
 
@@ -41,25 +44,26 @@ class TestTask1:
         assert parsed_dict == {
             'game_1': {
                 'total_kills': 11,
-                'kills': {
-                    'Mocinha': 1,
-                    'Isgalamido': 2
+                'kills_by_means': {
+                    'MOD_ROCKET_SPLASH': 3,
+                    'MOD_TRIGGER_HURT': 7,
+                    'MOD_FALLING': 1
                 },
                 'players': ['Isgalamido', 'Mocinha'],
-                'kills_by_means': {
-                    'MOD_TRIGGER_HURT': 7,
-                    'MOD_FALLING': 1,
-                    'MOD_ROCKET_SPLASH': 3
-                }
+                'kills': {'Isgalamido': -5}
             },
             'game_2': {
                 'total_kills': 4,
-                'kills': {'Mocinha': 1},
-                'players': ['Isgalamido', 'Mocinha', 'Zeh', 'Dono da Bola'],
                 'kills_by_means': {
-                    'MOD_ROCKET': 1,
                     'MOD_FALLING': 1,
-                    'MOD_TRIGGER_HURT': 2
+                    'MOD_TRIGGER_HURT': 2,
+                    'MOD_ROCKET': 1
+                },
+                'players': ['Isgalamido', 'Mocinha', 'Zeh', 'Dono da Bola'],
+                'kills': {
+                    'Zeh': -2,
+                    'Dono da Bola': -1,
+                    'Isgalamido': 1
                 }
             }
         }
@@ -73,14 +77,20 @@ class TestTask1:
         line = ("20:54 Kill: 1022 2 22: <world> killed Isgalamido "
                 "by MOD_TRIGGER_HURT")
         parse_kill_line(line, game_match)
-        assert game_match == {'kills': {}, 'players': ['Isgalamido'],
-                              'total_kills': 1}
+        assert game_match == {
+            'players': ['Isgalamido'],
+            'total_kills': 1,
+            'kills': {'Isgalamido': -1},
+        }
 
         line = ("22:06 Kill: 2 3 7: Isgalamido killed Mocinha by "
                 "MOD_ROCKET_SPLASH")
         parse_kill_line(line, game_match)
-        assert game_match == {'kills': {'Mocinha': 1}, 'total_kills': 2,
-                              'players': ['Isgalamido', 'Mocinha']}
+        assert game_match == {
+            'players': ['Isgalamido', 'Mocinha'],
+            'total_kills': 2,
+            'kills': {'Isgalamido': 0},
+        }
 
     def test_parse_kill_line_with_show_weapons(self):
         game_match = {
@@ -93,23 +103,27 @@ class TestTask1:
                 "by MOD_TRIGGER_HURT")
         parse_kill_line(line, game_match, show_weapon=True)
         assert game_match == {
-            'kills': {},
             'players': ['Isgalamido'],
-            'total_kills': 1,
             'kills_by_means': {
                 'MOD_TRIGGER_HURT': 1
-            }
+            },
+            'total_kills': 1,
+            'kills': {
+                'Isgalamido': -1
+            },
         }
 
         line = ("22:06 Kill: 2 3 7: Isgalamido killed Mocinha by "
                 "MOD_ROCKET_SPLASH")
         parse_kill_line(line, game_match, show_weapon=True)
         assert game_match == {
-            'kills': {'Mocinha': 1},
-            'total_kills': 2,
             'players': ['Isgalamido', 'Mocinha'],
             'kills_by_means': {
                 'MOD_TRIGGER_HURT': 1,
-                'MOD_ROCKET_SPLASH': 1,
+                'MOD_ROCKET_SPLASH': 1
+            },
+            'total_kills': 2,
+            'kills': {
+                'Isgalamido': 0
             }
         }
