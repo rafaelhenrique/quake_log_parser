@@ -13,14 +13,8 @@ def report(parsed_game_matches):
         message += "Players on this game: \n- {}\n\n".format(players)
         message += "Kills on this game:\n"
 
-        kills_by_player = 0
         for player_name, kills in kills.items():
             message += "- {}: {}\n".format(player_name, kills)
-            kills_by_player += kills
-
-        world_kills = total_kills - kills_by_player
-
-        message += "\nWorld kills on this game: \n- {}\n\n".format(world_kills)
 
         if 'kills_by_means' in values.keys():
             message += "Weapons of death on this game:\n"

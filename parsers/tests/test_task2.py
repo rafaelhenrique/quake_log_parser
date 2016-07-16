@@ -63,7 +63,6 @@ class TestTask2:
         assert ("Players on this game: \n- "
                 "Isgalamido, Mocinha, Zeh, Dono da Bola") in msg
         assert "Kills on this game:\n- Mocinha: 1" in msg
-        assert "World kills on this game: \n- 3" in msg
 
         assert "game_1" in msg
         assert "Total kills on this game: \n- 11" in msg
@@ -71,7 +70,6 @@ class TestTask2:
         assert "Kills on this game:" in msg
         assert "\n- Isgalamido: 2" in msg
         assert "\n- Mocinha: 1" in msg
-        assert "World kills on this game: \n- 8" in msg
 
     def test_write_correct_report_with_weapons(
             self, parsed_game_matches_with_weapons):
@@ -81,7 +79,6 @@ class TestTask2:
         assert ("Players on this game: \n- "
                 "Isgalamido, Mocinha, Zeh, Dono da Bola") in msg
         assert "Kills on this game:\n- Mocinha: 1" in msg
-        assert "World kills on this game: \n- 3" in msg
 
         assert "\n- MOD_TRIGGER_HURT: 14" in msg
         assert "\n- MOD_RAILGUN: 9" in msg
@@ -97,6 +94,5 @@ class TestTask2:
         assert "Kills on this game:" in msg
         assert "\n- Isgalamido: 2" in msg
         assert "\n- Mocinha: 1" in msg
-        assert "World kills on this game: \n- 8" in msg
 
         assert "\n- MOD_ROCKET_SPLASH: 60" in msg
