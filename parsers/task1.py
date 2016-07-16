@@ -8,7 +8,7 @@ start_regex = re.compile(r".*InitGame:.*")
 kill_regex = re.compile(r".*Kill:.*:(.*).*killed(.*)by(.*)")
 
 
-def parse_game_kills(logfile):
+def parse_game_kills(logfile, show_weapon=False):
     """Get logfile and parse results into OrderedDict"""
     game_match_count = 1
     key_map = "game_{}"
@@ -17,16 +17,27 @@ def parse_game_kills(logfile):
         for line in fp.readlines():
             if start_regex.match(line):
                 key = key_map.format(game_match_count)
-                parsed_game_matches[key] = {"total_kills": 0, "players": [],
-                                            "kills": {}}
+                if show_weapon:
+                    parsed_game_matches[key] = {
+                        "total_kills": 0,
+                        "players": [],
+                        "kills": {},
+                        "kills_by_means": {}
+                    }
+                else:
+                    parsed_game_matches[key] = {
+                        "total_kills": 0,
+                        "players": [],
+                        "kills": {},
+                    }
                 game_match_count += 1
 
             if kill_regex.match(line):
-                parse_kill_line(line, parsed_game_matches[key])
+                parse_kill_line(line, parsed_game_matches[key], show_weapon)
     return parsed_game_matches
 
 
-def parse_kill_line(line, game_match):
+def parse_kill_line(line, game_match, show_weapon=False):
     """Specific parse to kill line"""
     m = kill_regex.match(line)
     player_alive = m.group(1).strip()
@@ -45,3 +56,10 @@ def parse_kill_line(line, game_match):
             game_match["kills"][player_dead] += 1
         else:
             game_match["kills"][player_dead] = 1
+
+    if show_weapon:
+        weapon = m.group(3).strip()
+        if weapon in game_match["kills_by_means"].keys():
+            game_match["kills_by_means"][weapon] += 1
+        else:
+            game_match["kills_by_means"][weapon] = 1

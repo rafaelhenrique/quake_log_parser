@@ -55,3 +55,10 @@ $ python run.py -f games.log -v
 ```
 $ python run.py -f games.log -r
 ```
+
+### Show report mode with weapons on end of parser
+
+```
+$ python run.py -f games.log -r -p
+```
+

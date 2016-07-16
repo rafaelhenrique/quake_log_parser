@@ -14,6 +14,9 @@ if __name__ == "__main__":
                         help='your logfile fullpath',
                         required=True)
 
+    parser.add_argument('-p', dest='plus', action='store_true',
+                        help='enable plus mode to show weapons of death')
+
     parser.add_argument('-r', dest='report', action='store_true',
                         help='print report on finish')
 
@@ -21,7 +24,10 @@ if __name__ == "__main__":
                         help='verbose mode')
 
     args = parser.parse_args()
-    game_matches = parse_game_kills(args.logfile)
+    if args.plus:
+        game_matches = parse_game_kills(args.logfile, show_weapon=True)
+    else:
+        game_matches = parse_game_kills(args.logfile)
 
     if args.verbose:
         games_json = jsonify(game_matches)
